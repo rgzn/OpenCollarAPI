@@ -1,0 +1,190 @@
+openapi: "3.0.2"
+info:
+  version: 0.1.0
+  title: Open Collar API
+  description: Proposed universal standard API for GPS collar data access. This API specification details the minimum set of calls required to meet the universal open standard. Collar data providers may provide more calls to meet their needs so long as they implement the API detailed in this standard. Additional calls should still be in the Open API format. 
+  license:
+    name: GPLv3
+paths:
+  /devices:
+    get:
+      summary: Returns a list of devices.
+      operationId: listDevices
+      tags: 
+        - devices
+      responses:
+        '200':
+          description: An array of devices
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Devices"
+        '400':
+          description: No permission
+  /devices/{deviceId}:
+    get:
+      summary: Info for a specific device
+      operationId: showDeviceById
+      tags:
+        - devices
+      parameters:
+        - name: deviceId
+          in: path
+          required: true
+          description: The id of the device to retrieve
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Respond with info for requested device
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Device"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /fixes/findByDate:
+    get: 
+      summary: gets fix data by fix dates, and optionaly, device ID
+      description: uses the GPS date to select data, as opposed to upload date. Without deviceID params, fixes from all user's devices are returned.
+      tags:
+        - fixes
+      parameters:
+        - name: from
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+        - name: to
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+        - name: deviceID
+          in: query
+          description: to fetch for multiple devices, multiple deviceID params can be passed
+          required: false
+          schema:
+            type: string
+          explode: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Fixes"
+  /fixes/findByUploadDate:
+    get: 
+      summary: gets fix data by upload date, and optionaly, device ID
+      description: Uses the date that the data was made available on the server, rather than the actual timestamps of the data. This is useful for scheduled downloads because it prevents the user missing delayed data. Without deviceID params, fixes from all user's devices are returned.
+      tags:
+        - fixes
+      parameters:
+        - name: from
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+        - name: to
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+        - name: deviceID
+          in: query
+          description: to fetch for multiple devices, multiple deviceID params can be passed
+          required: false
+          schema:
+            type: string
+          explode: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Fixes"
+components:
+  schemas:
+    Fix: 
+      required:
+        - timestamp
+        - uploadTimestamp
+        - lat
+        - lon
+        - altitude
+        - dop
+      properties:
+        timestamp: 
+          type: string
+          format: date-time
+          description: fix time in ISO 8691 format eg. `2018-11-22T18:30:00Z`
+        uploadTimestamp: 
+          type: string
+          format: date-time
+          description: This is the time this fix was made available on the server. in ISO 8691   format eg. `2018-11-22T18:30:00Z`
+        lat: 
+          type: number
+          description: in decimal degrees
+        lon: 
+          type: number
+          description: in decimal degrees
+        altitude:
+          type: number 
+          description: in meters
+        dop: 
+          type: number
+        voltage: 
+          type: number
+        voltageBackup:
+          type: number
+        temperature:
+          type: number
+          description: in degrees C
+    Fixes:
+      type: array
+      items: 
+        $ref: "#/components/schemas/Fix"
+    Device:
+      required:
+        - id
+      properties:
+        id: 
+          type: string
+        model: 
+          type: string
+        status:
+          type: string
+        lastUpdate:
+          type: string
+          format: date-time
+          description: in ISO 8691 format eg. `2018-11-22T18:30:00Z`
+        groupID:
+          type: integer
+        geofenceIds:
+          type: array
+          items:
+            type: integer
+    Devices:
+      type: array
+      items:
+        $ref: "#/components/schemas/Device"
+    Error:
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
