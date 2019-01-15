@@ -13,7 +13,17 @@ tags:
   - name: devices
     description: >
       These operations are for accessing information on the user's devices. This includes Collars, other GPS tags, VITs, or any other devices that push data to the server. 
-  - names: positions
+  - name: positions
+    description: >
+      These operations are for accessing position data from GPS devices. They are split up based on the how the data is selected, and the format of the returned data. Some of the calls in this sections return CSV files instead of JSON responses. The format for the CSV is specified in the external documentation. 
+    externalDocs:
+      url: http://opencollarapi.org/csv-format
+  - name: alerts
+    description: >
+      Operations related to accessing alert records. This includes mortality notifications, VIT notifications, etc.
+  - name: user
+    description: >
+      Operations related to the user's account, such as authentication or accessing ones own account status. 
 paths:
   /devices:
     get:
@@ -123,7 +133,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Fixes"
+                $ref: "#/components/schemas/Positions"
   /user/login:
     post:
       summary: Logs in and returns authentication cookie
