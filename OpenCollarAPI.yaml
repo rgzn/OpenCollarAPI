@@ -5,6 +5,10 @@ info:
   description: Proposed universal standard API for GPS collar data access. This API specification details the minimum set of calls required to meet the universal open standard. Collar data providers may provide more calls to meet their needs so long as they implement the API detailed in this standard. Additional calls should still be in the Open API format. 
   license:
     name: GPLv3
+security: 
+  - basicAuth: []
+  - apiKeyAuth: []
+  - cookieAuth: []
 paths:
   /devices:
     get:
@@ -33,7 +37,7 @@ paths:
         - name: deviceId
           in: path
           required: true
-          description: The id of the device to retrieve
+          description: The id of the device to retrieve, eg. unique collar SN
           schema:
             type: string
       responses:
@@ -115,6 +119,32 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Fixes"
+  /login:
+    post:
+      summary: Logs in and returns authentication cookie
+      requestBody:
+        required: true
+        description: a JSON object containing login and password
+        content: 
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+      security: []
+      responses:
+        '200':
+          description: > 
+            Successfully authenticated.
+            The session ID is returned in a cookie named `SESSION_ID`. You need to include this cookie in subsequent requests.
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+                example: SESSION_ID=abcde12345; Path=/; HttpOnly
+        '401':
+          description: >
+            Unsuccessful Login. 
+            Wrong username and password.
+          
 components:
   schemas:
     Fix: 
@@ -195,3 +225,25 @@ components:
           format: int32
         message:
           type: string
+    LoginRequest:
+      description: Login and Password object for initial authentication
+      required:
+        - username
+        - password
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: SESSION_ID
