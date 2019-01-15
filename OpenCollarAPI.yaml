@@ -119,9 +119,11 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Fixes"
-  /login:
+  /user/login:
     post:
       summary: Logs in and returns authentication cookie
+      tags: 
+        - user
       requestBody:
         required: true
         description: a JSON object containing login and password
