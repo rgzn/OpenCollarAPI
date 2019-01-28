@@ -1,36 +1,36 @@
-openapi: "3.0.2"
+openapi: 3.0.2
 info:
   version: 0.1.0
   title: Open Collar API
-  description: Proposed universal standard API for GPS collar data access. This API specification details the minimum set of calls required to meet the universal open standard. Collar data providers may provide more calls to meet their needs so long as they implement the API detailed in this standard. Additional calls should still be in the Open API format. 
+  description: Proposed universal standard API for GPS collar data access. This API specification details the minimum set of calls required to meet the universal open standard. Collar data providers may provide more calls to meet their needs so long as they implement the API detailed in this standard. Additional calls should still be in the Open API format.
   license:
     name: GPLv3
-security: 
+security:
   - basicAuth: []
   - apiKeyAuth: []
   - cookieAuth: []
 tags:
   - name: devices
-    description: >
+    description: |
       These operations are for accessing information on the user's devices. This includes Collars, other GPS tags, VITs, or any other devices that push data to the server. 
   - name: positions
-    description: >
+    description: |
       These operations are for accessing position data from GPS devices. They are split up based on the how the data is selected, and the format of the returned data. Some of the calls in this sections return CSV files instead of JSON responses. The format for the CSV is specified in the external documentation. 
     externalDocs:
-      url: http://opencollarapi.org/csv-format
+      url: 'http://opencollarapi.org/csv-format'
   - name: alerts
-    description: >
+    description: |
       Operations related to accessing alert records. This includes mortality notifications, VIT notifications, etc.
   - name: user
-    description: >
+    description: |
       Operations related to the user's account, such as authentication or accessing ones own account status. 
 paths:
   /devices:
     get:
       summary: Returns a list of devices such as collars or tags.
-      description: Request to generate list of the devices available to the user. This requests should return an array of Device data. The user can use this to get all the information about their available devices. 
+      description: Request to generate list of the devices available to the user. This requests should return an array of Device data. The user can use this to get all the information about their available devices.
       operationId: listDevices
-      tags: 
+      tags:
         - devices
       responses:
         '200':
@@ -38,10 +38,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Devices"
+                $ref: '#/components/schemas/Devices'
         '400':
           description: No permission
-  /devices/{deviceId}:
+  '/devices/{deviceId}':
     get:
       summary: Get the information about a specific device
       description: Returns the detailed info on a specific GPS device.
@@ -52,7 +52,7 @@ paths:
         - name: deviceId
           in: path
           required: true
-          description: The id of the device to retrieve, eg. unique collar SN
+          description: 'The id of the device to retrieve, eg. unique collar SN'
           schema:
             type: string
       responses:
@@ -61,17 +61,17 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Device"
+                $ref: '#/components/schemas/Device'
         default:
           description: unexpected error
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
+                $ref: '#/components/schemas/Error'
   /positions/findByDate:
-    get: 
-      summary: gets fix data by fix dates, and optionaly, device ID
-      description: Uses the GPS date to select data, as opposed to upload date. Without deviceID params, fixes from all user's devices are returned.
+    get:
+      summary: 'gets fix data by fix dates, and optionaly, device ID'
+      description: 'Uses the GPS date to select data, as opposed to upload date. Without deviceID params, fixes from all user''s devices are returned.'
       tags:
         - positions
       parameters:
@@ -82,9 +82,9 @@ paths:
         '200':
           $ref: '#/components/responses/positionRecordsJSON'
   /positions/findByUploadDate:
-    get: 
-      summary: gets fix data by upload date, and optionaly, device ID
-      description: Uses the date that the data was made available on the server, rather than the actual timestamps of the data. This is useful for scheduled downloads because it prevents the user missing delayed data. Without deviceID params, fixes from all user's devices are returned.
+    get:
+      summary: 'gets fix data by upload date, and optionaly, device ID'
+      description: 'Uses the date that the data was made available on the server, rather than the actual timestamps of the data. This is useful for scheduled downloads because it prevents the user missing delayed data. Without deviceID params, fixes from all user''s devices are returned.'
       tags:
         - positions
       parameters:
@@ -97,21 +97,20 @@ paths:
   /user/login:
     post:
       summary: Logs in and returns authentication cookie
-      tags: 
+      tags:
         - user
       requestBody:
         required: true
         description: a JSON object containing login and password
-        content: 
+        content:
           application/json:
             schema:
-              $ref: "#/components/schemas/LoginRequest"
+              $ref: '#/components/schemas/LoginRequest'
       security: []
       responses:
         '200':
-          description: > 
-            Successfully authenticated.
-            The session ID is returned in a cookie named `SESSION_ID`. Client must include this cookie in subsequent requests.
+          description: |
+            Successfully authenticated. The session ID is returned in a cookie named `SESSION_ID`. Client must include this cookie in subsequent requests.
           headers:
             Set-Cookie:
               schema:
@@ -119,7 +118,6 @@ paths:
                 example: SESSION_ID=abcde12345; Path=/; HttpOnly
         '401':
           $ref: '#/components/responses/Unauthorized'
-          
 components:
   responses:
     Unauthorized:
@@ -130,22 +128,22 @@ components:
             $ref: '#/components/schemas/Error'
     positionRecordsJSON:
       description: A JSON array of the requested position records
-      content: 
+      content:
         application/json:
-          schema: 
-            $ref: "#/components/schemas/Positions"
-  parameters: 
+          schema:
+            $ref: '#/components/schemas/Positions'
+  parameters:
     deviceIdParam:
       name: deviceId
       in: query
-      description: This query parameter specifies a single device ID to fetch data from. To fetch for multiple devices, multiple deviceID params can be passed
+      description: 'This query parameter specifies a single device ID to fetch data from. To fetch for multiple devices, multiple deviceID params can be passed'
       required: false
       schema:
         type: string
       explode: true
     fromDatetimeParam:
       name: from
-      description: This query parameter specifies the the minimum timestamp for the requested data. It is in ISO 8691 format eg. 2018-11-22T18:30:00Z
+      description: 'This query parameter specifies the the minimum timestamp for the requested data. It is in ISO 8691 format eg. 2018-11-22T18:30:00Z'
       in: query
       required: true
       schema:
@@ -153,7 +151,7 @@ components:
         format: date-time
     toDatetimeParam:
       name: to
-      description: This query parameter specifies the the maximum timestamp for the requested data. It is in ISO 8691 format eg. 2018-11-22T18:30:00Z
+      description: 'This query parameter specifies the the maximum timestamp for the requested data. It is in ISO 8691 format eg. 2018-11-22T18:30:00Z'
       in: query
       required: true
       schema:
@@ -161,7 +159,7 @@ components:
         format: date-time
   schemas:
     Position:
-      description: This contains all the data recorded for a single GPS fix generated by a GPS tag.
+      description: 'This contains all the data recorded for a single GPS fix generated by a GPS tag.'
       required:
         - timestamp
         - uploadTimestamp
@@ -170,26 +168,26 @@ components:
         - altitude
         - dop
       properties:
-        timestamp: 
+        timestamp:
           type: string
           format: date-time
-          description: fix time in ISO 8691 format eg. `2018-11-22T18:30:00Z`
-        uploadTimestamp: 
+          description: 'fix time in ISO 8691 format eg. `2018-11-22T18:30:00Z`'
+        uploadTimestamp:
           type: string
           format: date-time
-          description: This is the time this fix was made available on the server. in ISO 8691   format eg. `2018-11-22T18:30:00Z`
-        lat: 
+          description: 'This is the time this fix was made available on the server. in ISO 8691   format eg. `2018-11-22T18:30:00Z`'
+        lat:
           type: number
           description: in decimal degrees
-        lon: 
+        lon:
           type: number
           description: in decimal degrees
         altitude:
-          type: number 
-          description: in meters
-        dop: 
           type: number
-        voltage: 
+          description: in meters
+        dop:
+          type: number
+        voltage:
           type: number
         voltageBackup:
           type: number
@@ -197,25 +195,41 @@ components:
           type: number
           description: in degrees C
     Positions:
-      description: This is an array of Position objects. It is used in responses to any request that ask for sets of GPS data. It can be used in generating responses in JSON, CSV, or GPX formats. 
+      description: 'An array of Position objects. It is used in responses to any request that ask for sets of GPS data. It can be used in generating responses in JSON, CSV, or GPX formats.'
       type: array
-      items: 
-        $ref: "#/components/schemas/Position"
+      items:
+        $ref: '#/components/schemas/Position'
+    Alert:
+      description: 'An Alert is a record of a tag event, not a GPS fix. Tag events include mortality detections, drop-offs, battery alerts, geofence crossings, etc.'
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+          description: 'fix time in ISO 8691 format eg. `2018-11-22T18:30:00Z`'
+        uploadTimestamp:
+          type: string
+          format: date-time
+          description: 'This is the time this alert was made available on the server. in ISO 8691   format eg. `2018-11-22T18:30:00Z`'
+    Alerts:
+      description: 'An array of Alert objects. It is used in responses to any request that asks for sets of alert data. It can be used in generating responses in JSON or CSV formats.'
+      type: array
+      items:
+        $ref: '#/components/schemas/Alert'
     Device:
-      description: Information about a specific GPS tag or collar. This data object should contain all the static information about a specific collar. 
+      description: Information about a specific GPS tag or collar. This data object should contain all the static information about a specific collar.
       required:
         - id
       properties:
-        id: 
+        id:
           type: string
-        model: 
+        model:
           type: string
         status:
           type: string
         lastUpdate:
           type: string
           format: date-time
-          description: in ISO 8691 format eg. `2018-11-22T18:30:00Z`
+          description: 'in ISO 8691 format eg. `2018-11-22T18:30:00Z`'
         groupID:
           type: integer
         geofenceIds:
@@ -226,9 +240,9 @@ components:
       description: An array of Device data objects. Can be returned as a JSON or CSV object.
       type: array
       items:
-        $ref: "#/components/schemas/Device"
+        $ref: '#/components/schemas/Device'
     Error:
-      description: Messages to return to invalid requests. 
+      description: Messages to return to invalid requests.
       type: object
       required:
         - code
