@@ -6,7 +6,10 @@ The main document in this project is the OpenCollarAPI yaml file.
 This specifies the API calls and responses according to the OpenAPI 3.0  standard as documented here:
 https://github.com/OAI/OpenAPI-Specification
 
-To inspect the API or generate example clients/servers, try using Swagger tools. I recommend pasting the yaml text into the swagger editor here:
+To use the SwaggerHub interface to view this API go here:
+https://app.swaggerhub.com/apis/Open-Collar-Standard/open-collar_api/0.1.0
+
+To edit the API yourself, I recommend pasting the yaml text into the swagger editor here:
 https://editor.swagger.io
 
 ## About the OpenAPI standard ##
