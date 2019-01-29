@@ -5,7 +5,7 @@ Specifications and documentation for a universal standard API to access GPS coll
 Files: 
   + __README.md__ _The document you are currently reading_
   + __OpenCollarAPI.yaml__ _Specifies the API calls and responses according to the [OpenAPI 3.0](https://github.com/OAI/OpenAPI-Specification) standard_
-  + __csvDetails.md__ _Information about how the csv requirements in this specificaiton_
+  + __CSV.md__ _Information about how the csv requirements in this specificaiton_
   + __csvFormat.json__ _Specifies the formatting options for the CSV according to [CSV Dialect](https://frictionlessdata.io/specs/csv-dialect/)
 
 The main document in this project is the OpenCollarAPI yaml file. To use the SwaggerHub interface to view this API go here:
