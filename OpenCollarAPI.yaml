@@ -257,8 +257,12 @@ components:
       description: Information about a specific GPS tag or collar. This data object should contain all the static information about a specific collar.
       required:
         - id
+        - manufacturer
+        - model
       properties:
         id:
+          type: string
+        manufacturer:
           type: string
         model:
           type: string
@@ -267,7 +271,7 @@ components:
         lastUpdate:
           type: string
           format: date-time
-          description: 'in ISO 8691 format eg. `2018-11-22T18:30:00Z`'
+          description: 'time of most recent upload from this device in ISO 8691 format eg. `2018-11-22T18:30:00Z`'
         groupID:
           type: integer
         geofenceIds:
