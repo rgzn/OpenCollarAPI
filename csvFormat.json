@@ -1,7 +1,7 @@
 {
   "dialect": {
     "csvddfVersion": 1.2,
-    "delimiter": ";",
+    "delimiter": "\t",
     "doubleQuote": true,
     "lineTerminator": "\r\n",
     "quoteChar": "\"",
