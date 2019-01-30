@@ -8,7 +8,8 @@ While this format is a recognized MIME type, it is still somewhat unclear.
 This document specifies the information and file format associated with these
 responses. 
 
-There are three aspects of the CSV specification: 
+There are three aspects of the CSV specification:     
+
 	+ File Specs
 	+ Content
 	+ Dialect
