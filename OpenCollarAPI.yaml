@@ -248,6 +248,15 @@ components:
         name:
           type: string
           description: "The Alert Name, ie Mortality, Geofence, Dropoff, etc"
+        lat:
+          type: number
+          description: optional coordinate for position-triggered alert (in decimal degrees)
+        lon:
+          type: number
+          description: optional coordinate for position-triggered alert (in decimal degrees)
+        optionalInfo:
+          type: string
+          description: any extra info related to the specific alert
     Alerts:
       description: 'An array of Alert objects. It is used in responses to any request that asks for sets of alert data. It can be used in generating responses in JSON or CSV formats.'
       type: array
