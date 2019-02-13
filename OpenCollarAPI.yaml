@@ -7,9 +7,7 @@ info:
     
     # OpenAPI Specification 
     
-    This API is documented in **OpenAPI format** and is based on
-    [Petstore sample](http://petstore.swagger.io/) provided by 
-    [swagger.io](http://swagger.io) team.
+    This API is documented in **OpenAPI format**.
     Documentation html is generated with 
     [generator-openapi-repo](https://github.com/Rebilly/generator-openapi-repo) and 
     [ReDoc](https://github.com/Rebilly/ReDoc)
