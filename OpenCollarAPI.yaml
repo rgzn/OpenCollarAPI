@@ -31,7 +31,6 @@ info:
       with an authentication key. Then the user can submit that key via cookie
       as authentication on subsequent requests.
     
-
     <security-definitions /> 
   
   license:
