@@ -3,20 +3,49 @@ info:
   version: 0.1.0
   title: Open Collar API
   description: >-
-    Proposed universal standard API for GPS collar data access. This API
-    specification details the minimum set of calls required to meet the
+    This is the template specification and documentation for the OpenCollarAPI.
+    
+    # OpenAPI Specification
+    This API is documented in **OpenAPI format** and is based on
+    [Petstore sample](http://petstore.swagger.io/) provided by 
+    [swagger.io](http://swagger.io) team.
+    Documentation html is generated with 
+    [generator-openapi-repo](https://github.com/Rebilly/generator-openapi-repo) and 
+    [ReDoc](https://github.com/Rebilly/ReDoc)
+    
+    # OpenCollarAPI
+    This is a proposed universal standard API for GPS collar data access. 
+    This API specification details the minimum set of calls required to meet the
     universal open standard. Collar data providers may provide more calls to
     meet their needs so long as they implement the API detailed in this
-    standard. Additional calls should still be in the Open API format.
+    standard. Additional calls should still be in the Open API format. 
+    You can find out more about OpenAPI at [http://swagger.io](http://swagger.io) 
+    
+    # Authentication
+    OpenCollarAPI offers two main forms of authentication:
+      - API Key
+      - basicAuth and cookieAuth
+      The latter option is actually two forms of authentication used in conjunction. 
+      The client first authenticates with a username and password using the 
+      user/login path. The response to a successful request on this path is a cookie
+      with an authentication key. Then the user can submit that key via cookie
+      as authentication on subsequent requests.
+    
+
+    <security-definitions /> 
+  
   license:
     name: GPLv3
   contact:
     name: JMW
     url: http://github.com/rgzn/OpenCollarAPI
     email: jonathan.weissman@wildlife.ca.gov
+externalDocs:
+  description: File format specs and additional docs
+  url: 'https://github.com/rgzn/OpenCollarAPI'
 security:
-  - basicAuth: []
   - apiKeyAuth: []
+  - basicAuth: []
   - cookieAuth: []
 tags:
   - name: devices
