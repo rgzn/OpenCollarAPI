@@ -8,7 +8,7 @@ Files:
   + __CSV.md__ _Information about how the csv requirements in this specificaiton_
   + __csvFormat.json__ _Specifies the formatting options for the CSV according to [CSV Dialect](https://frictionlessdata.io/specs/csv-dialect/)_
 
-The main document in this project is the OpenCollarAPI yaml file. The preferred way to view the documentation is to [view the specification on with ReDoc](http://rebilly.github.io/ReDoc/?url=https://raw.githubusercontent.com/rgzn/OpenCollarAPI/master/OpenCollarAPI.yaml#operation/listDevices)
+The main document in this project is the OpenCollarAPI yaml file. The preferred way to view the documentation is to [view the specification on with ReDoc](http://rebilly.github.io/ReDoc/?url=https://raw.githubusercontent.com/rgzn/OpenCollarAPI/master/OpenCollarAPI.yaml)
 
 To use the SwaggerHub interface to view this API go here:
 https://app.swaggerhub.com/apis/Open-Collar-Standard/open-collar_api/0.1.0
