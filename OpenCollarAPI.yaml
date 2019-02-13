@@ -70,6 +70,17 @@ tags:
     description: |-
       Operations related to the user's account, such as authentication or
       accessing ones own account status. 
+x-tagGroups:
+  - name: Data Sources
+    tags:
+      - devices
+  - name: Data
+    tags:
+      - positions
+      - alerts
+  - name: User Management
+    tags:
+      - user
 paths:
   /devices:
     get:
