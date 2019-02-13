@@ -5,7 +5,8 @@ info:
   description: |-
     This is the template specification and documentation for the OpenCollarAPI.
     
-    # OpenAPI Specification #
+    # OpenAPI Specification 
+    
     This API is documented in **OpenAPI format** and is based on
     [Petstore sample](http://petstore.swagger.io/) provided by 
     [swagger.io](http://swagger.io) team.
@@ -13,7 +14,8 @@ info:
     [generator-openapi-repo](https://github.com/Rebilly/generator-openapi-repo) and 
     [ReDoc](https://github.com/Rebilly/ReDoc)
     
-    # OpenCollarAPI #
+    # OpenCollarAPI 
+    
     This is a proposed universal standard API for GPS collar data access. 
     This API specification details the minimum set of calls required to meet the
     universal open standard. Collar data providers may provide more calls to
@@ -21,7 +23,8 @@ info:
     standard. Additional calls should still be in the Open API format. 
     You can find out more about OpenAPI at [http://swagger.io](http://swagger.io) 
     
-    # Authentication #
+    # Authentication 
+    
     OpenCollarAPI offers two main forms of authentication:
       - API Key
       - basicAuth and cookieAuth
